@@ -1,0 +1,22 @@
+language: python
+python:
+  - "3.6"
+
+before_install:
+  - sed '/django-heroku==/d' requirements.txt > requirements-travis.txt
+install:
+  - pip install -r requirements-travis.txt
+before_script:
+  - python manage.py migrate
+script:
+  - python manage.py test
+
+deploy:
+  provider: heroku
+  app: warm-stream-95636
+  on:
+    repo: Linonse/RSOI-pr
+  api_key:
+    secure: "7bc8ff6b-9e6c-42c6-9201-224aa977a688"
+notifications:
+  email: false
